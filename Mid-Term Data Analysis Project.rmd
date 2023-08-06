@@ -1,0 +1,139 @@
+---
+title: "Mid-Term Data Analysis Project Template"
+author: "Riyan Khawaja"
+date: "4/2/2023"
+output: word_document
+---
+
+## 1. Introduction. The introductions should include
+
+This project utilizes the employeedata dataset from Capital One to determine what drives employee retention and satisfaction.  The data includes information on employee income, department, years at company, weekly hours worked and other statistics to help draw conclusions on what factors play an important role in satisfying and retaining employees. Keeping staff satisfied is important because if employees are happy, then they are more prone to delivering higher quality of work and therefore benefiting the company.
+
+There were 6 fundamental questions that were formed in order to have a better idea of what the answer to our main question is. These 6 questions were:
+
+  * What are the summary statistics of salaries for each employee based on their job satisfaction level?
+  
+  * What is the job satisfaction and performance rating relationship? 
+  
+  * Is hours/week a indicator of whether or not an employee may eventually leave the firm?
+  
+  * Does time spent at a company have any relationship with salary?
+  
+  * Does higher salary mean higher job satisfaction?
+  
+  * Do department and job satisfaction have some sort of relationship?
+  
+Using these six questions we were able to gain some context and understanding behind the main question of this project: what exactly drives employee satisfaction and retention? 
+
+The outline of this paper is as follows: First we will talk about the data and exploratory analysis done for each question. This section will include information regarding data, method, analysis and results. From there we will go into the conclusion and discuss new questions, future work, etc. 
+
+
+## 2. Data and Model
+### What are the average salaries of each level of job satisfaction?
+
+To answer this question the data used was the job_satisfaction and salary columns. 
+The first action that was performed on the data was grouping it by department by using the group_by() function. From there the summarize() function was used to obtain statistics such as mean, median, max, and min values for salaries in each respective job_satisfaction group. After getting the results of the data an analysis was performed.
+
+Based on the data it seems apparent that the higher the salary, the higher the job satisfaction. The one arbitrary value that does not comply with our previous statement is the mean salaries for low and medium and job satisfactions. Medium job-satisfaction had a lower mean (91744.30) compared to low job satisfaction(92404.11) but this could be due to outliers since mean is not outlier resistant.  
+
+### What is the job satisfaction and performance rating relationship? 
+
+The data used to investigate this question are the performance_rating and job_satisfaction columns. First we called the employee dataset and then piped the group_by() function. From there we used select() function on performance_rating and job_satisfaction. After this we piped the table() function which gave us a contingency table. This table is able to show us the job satisfaction counts within each performance_rating. This metric is useful because it can show how differently performing employees are experiencing different types of job satisfaction.
+
+Based on the results from table, it is clear that employees who were either exceptional or exceeded expectations had a high and very high job satisfaction. Of the 472 employees who were rated of exceeding expectations, 142 of them reported high job satisfaction and 148 of them reported very high job satisfaction. Furthermore, of the 286 employees who were rated exceptional, 87 reported high job satisfaction while 101 reported very high job satisfaction. The interesting figure in this table were the employees who had a performance rating of not effective because although they have no effect on the firm, most of them still noted a high and very high job satisfaction. Furthermore there were more people who met expectations and had high/very high job satisfaction (160 and 165) than those in any other category. This could be an interesting trend to look into and see why those who met expectations and had high job satisfaction are more prevalent than those who exceeded or were exceptional. One possible reason for this could be employees do whats asked of them, most people don't go above and beyond and this could be due to pay or company culture that management needs to transform. 
+
+### Is hours/week a indicator of whether or not an employee may eventually leave the firm?
+
+To find more clarity on this question, the weekly_hours, yrs_at_company and left_company columns were used. The goal of this question is to show whether assigning too many hours to our employees drives them to the point of leaving, which can also suggest that employees were not satisfied in their positions. The first step was to use the group_by() function to separate the yes/no of whether or not they left the company. After that summary statistics were calculated using the summarize() function. 
+
+Based on the resulting table, employees who left the company had a higher value in every statistical category in the table compared to those who did not leave the company. For example, those who left the company worked an average of 58.60759 hours while those who didn't leave worked an average of 48.36659 hours. Furthermore, the max hours worked for those that left the company was 66 hours while for those who didn't leave the company had a max value of 58 hours. One category that the employees who left the company did not have a greater value in was the average time spent at company. Employees who did not leave have spent an average of 7.369019 years with the company while those who left spent 5.130802 years with the company. 
+
+This leads to the belief that a key part of employee satisfaction and retention is not over working them and having a work-life balance. 
+
+### Does time spent at a company have any relationship with salary?
+
+This question was also used as part of the larger mission of solving what drives employee satisfaction and retention. To figure out whether or not there exists a relationship between salary and time spent at the company a scatter plot was used. To do this the ggplot() and geom_point() functions were used. Inside the ggplot(), we entered x as yrs_at_company and y as salary. This would show us that if the longer an employee stayed with a company, did they get paid more. 
+
+The resulting scatter plot indicated no relationship exists between the two variables. This is interesting because historically, employees who had been with a firm longer receive more seniority as well as higher pay. This could mean that employers need to be more cautious of how they pay and treat long time employees because this also plays a role in how employees feel about their jobs. 
+
+### Does higher salary mean higher job satisfaction?
+As shown by one of our earlier tables, the higher the job satisfaction the higher the salary was. However, we needed a graphical depiction to truly prove this statement. To show this relationship a histogram was used using the ggplot() and geom_histogram() functions. Our x value was the salary and we filled by job satisfaction to better understand this relationship. The graph was split up using facet_wrap() to show information for the three varying marital statuses: divorced, married and single. This would better aid in knowing context behind the sample since people who are newly divorced may not find any satisfaction in their job no matter the circumstances.
+
+The results of this histogram showed that most of the employees in this dataset make just around 100,000 dollars. Furthermore, as shown by the fill colors, many people had high and very high job satisfaction around this area. However, this does not mean our statement of the higher the salary the more happy people are is true. As shown by the graph there are people making around 50,000 dollars and a large proportion of them have a high or very high satisfaction rate. What this means for employers is that salary may not be the sole factor that leads to employee satisfaction. Other things must be taken into account such as workplace environment, commute, benefits and other things of such nature. 
+
+### Do department and job satisfaction have some sort of relationship?
+To answer this question a bar graph was used. To make a bar graph, the ggplot() and geom_bar() functions were used. The x-value were the varying departments and the bars were filled based of off job-satisfaction levels. Finally, the graph was flipped for ease of reading. 
+
+The results of this graph showed some important things. The first thing is that a large part of the sample are in IT and Analytics. Secondly, while IT had the largest counts of highly and very satisfied employees it also had the highest counts for low satisfied employees. Following IT, the research and sales departments had the second and third most highly and very highly satisfied employees. 
+
+## 3.	Conclusion(s)/Discussion. 
+
+Based on the questions and the data analysis performed we can conclude a few things. First of all, although the histogram showed no strong correlation between salary and job satisfaction, the underlying truth is that the more employees were getting paid, the larger the proportion of those employees were satisfied with their roles. Secondly, job satisfaction and department had little to no relationship between them. However, for future analysis the sample should include equal amounts of each department so that more exploration can be done on this topic. Thirdly, surprisingly there was no relationship between salary and years spent at a company. This is interesting because as employees spend more time at a company they expect more pay and better treatment. Companies need to be mindful of this going forward because employees value loyalty. Finally, it is apparent that when worked too many hours employees tend to leave. Firms need to make sure employees aren't over working their stated hours because this can also lead to burnout and eventual department from the company. 
+
+
+## 4.	Appendix/Appendices. 
+
+```{r}
+library(tidyverse) #Loads the tidyverse package 
+employee_data <- read_csv('EmployeeData.csv') #assigns the csv file to employee_data 
+```
+
+```{r}
+#This code summarizes the salary statistics of each employee based on their job satisfaction level
+employee_data %>% #call the dataset 
+  group_by(job_satisfaction) %>% #group by job satisfaction 
+  summarize( #using summarize we are able to get the values below  
+    mean_salary = mean(salary), 
+    median_salary = median(salary), 
+    max_salary = max(salary), 
+    min_salary = min(salary)
+  )
+```
+
+```{r}
+#This code creates a contingency table based on two variables: performance rating and job-satisfaction
+employee_data %>% 
+  group_by(performance_rating) %>%
+ select(performance_rating, job_satisfaction) %>% #select performance rating and job satisfaction
+  table() #makes a contingency table 
+```
+
+```{r}
+#This code creates a table based on hours per week and whether or not the employee left the company
+employee_data %>% 
+  group_by(left_company) %>% #groups by whether or not the employee left the company 
+ summarize( #summarizes the values below regarding the two group of employees who did and did not leave their company
+   average_hours = mean(weekly_hours),
+   median_hours = median(weekly_hours), 
+   max_hours = max(weekly_hours), 
+   min_hours = min(weekly_hours), 
+   avg_timespent = mean(yrs_at_company)
+ )
+  
+```
+
+## Including Plots
+
+```{r}
+ggplot(employee_data, aes(x = yrs_at_company , y = salary) ) + #use ggplot to make graph
+   geom_point(color = '#006633', alpha = .25) + #call geom_point since we want a scatter plot 
+  labs(title = "Years at Company vs Salary") #name the graph
+```
+
+```{r}
+ggplot(employee_data, mapping = aes(x = salary, fill = job_satisfaction)) + #use ggplot to make graph, salary on x- axis and is filled by job_satisfaction 
+  geom_histogram(color = 'white', bins=30) +
+  facet_wrap(~marital_status) #further categorize based on marital status 
+   labs(title = 'Density Histogram of Salary by department', 
+       x = 'Salary', 
+       y = 'Count')
+```
+
+```{r}
+ggplot(employee_data, mapping = aes(x = department, fill = job_satisfaction)) + #fill by histogram to see if proportions of satisfaction varied within each department 
+  geom_bar(color = 'white') + #use geom_bar to make bar_graph and the edges are white
+   labs(title = 'Bar graph of department counts filled by job satisfaction level', 
+       x = 'Department', 
+       y = 'Count') +
+coord_flip() #flip the orientation of the graph 
+```

@@ -1,0 +1,499 @@
+---
+title: "Final Project"
+output:
+  word_document: default
+  pdf_document: default
+---
+
+
+**Your Name**: Riyan Khawaja 
+**Your G Number**: G01259437
+
+
+```{r warning = FALSE, message = FALSE}
+# Suppress dplyr summarise grouping warning messages
+options(dplyr.summarise.inform = FALSE)
+
+## Add R libraries here
+library(tidyverse)
+library(tidymodels)
+library(vip)
+#install.packages("klaR")
+#install.packages("kknn")
+#install.packages("discrim")
+library(discrim)
+library(kknn)
+library(klaR)
+
+# Load data
+loans_df <- read_rds(file.choose("C:/Users/Home/Desktop/MIS 431"))
+
+```
+# Summary of Results [50 Points]
+
+## Introduction 
+  The aim of this project is to investigate the elements that result in loan defaults and create machine learning algorithms that can forecast the probability of a borrower defaulting on their loan in the future. The loans_df dataset includes information on 3 and 5-year loans initiated by a national bank in 2017 for customers residing in the Mid-Atlantic and Northeast regions of the United States. The corporation wants to determine the factors that lead to loan defaults and whether they can anticipate if a client will ultimately default on their loan. The bank has been experiencing significant financial losses due to an increase in loan defaults among its customers in recent years. The objective is to improve the identification of borrowers who are at risk of defaulting on their loans in order to reduce financial losses.
+  
+  To help achieve the greater goal of being able to predict a borrower defaulting on their loan, it was important to conduct exploratory data analysis (EDA). The questions that were asked during EDA were:
+
+  * How do the summary statistics of the loan default groups differ in certain variables?
+  
+  * How do the varying homeownership statuses affect the loan default? 
+  
+  * What are the statistics for the debt:income ratio for the two groups? 
+  
+  * Is there any possible relationship present between income and loan amount? 
+  
+  * Is there a loan_purpose that is more subject to a loan_default?
+  
+  * Is there a difference in total credit history between those who did and did not have a loan default? 
+  
+  All these questions were important because they help give some context on whether a certain variable(s) played a role in whether a customer's loan defaulted or not. Furthermore, this EDA helped us identify to some extent what variables had a greater impact on a loan defaulting or not. 
+  
+## Exploratory Data Analysis 
+There were many interesting findings that were discovered through EDA. Firstly, those who defaulted on a loan had a lower median and average income than those who did not. Those who defaulted on a loan had an average and median income lower than those who didn't by $8,277.66 (differences in average) and \$9000 (differences in median). This could mean that income is an important determinant on whether or not a loan will default. Furthermore, the average and median credit history of those who defaulted on a loan was about 1 year shorter than those who didn't which leads to belief that credit history to some extent does indicate how likely a customer is to pay back their loan. 
+
+Another finding was that the largest proportion of customers who defaulted on their loan were renting their home (making up about 43% of the people whose loan defaulted). Those who own homes would have the second highest proportion at about 38% and then those who have a mortgage at about 32.4%. This can be important because the business can be extra cautious when taking loans from customers who are renting their homes. 
+
+Something that was note worthy and also a variable that could be a key factor in loan defaults was the debt to income ratio. Those defaulted on their loan, on average, had a debt:income ration that was 4 points higher than those who did not. This is not surprising at all because it is likely that those who are in more debt will have a harder time paying back their loans. 
+
+EDA was also done through graphical visualizations. To discover the relationship between income and loan amount a scatter plot was used. This question was asked because it was important to see whether or not those with a certain amount of income would request for a bigger/smaller loan which would then help the business decipher how much should they loan based on income. The resulting scatter plot showed no indication of a relationship between the two variables which means that income does not effect the loan amount a customer will ask for. 
+
+Another question that was explored through a graphical presentation was whether there was a loan purpose that was more subject to a loan default. The resulting histogram indicated that those who took a loan out for credit cards made up the largest proportion of people who defaulted on a loan. This is extremely important for the business because using the loan purposes they can see whether or not a customer is likely to pay back their loan or not. 
+
+Finally, the last graph was a box plot. This plot showcases the differences in interest rate for those who did and did not default on a loan. The box plot shows that those who did not have a loan default had a smaller interest rate which suggests that interest rate does play a role in whether or not a loan defaults.  
+
+## ML Model Building Exercise 
+
+To help predict whether or not a customers loan will default three ML models were used. These models consisted of KNN, LDA and logistical modeling. The best performing of the three models was the LDA model which had an accuracy of about 94.2%. However, according to the analysis of the logistic model, the variables of importance were what term the loans were (five year loans were more prone to defaults), the installment, loan amount, and the interest rate. This means that these 4 variables have the strongest influence when it comes to whether a loan will default. 
+
+An important performance metric that is worth discussing is the roc_auc. The roc_auc or Receiver Operating Characteristic Area Under the Curve, is a performance metric used in machine learning and statistics to evaluate the quality of binary classification models. It is a measure of the model's ability to distinguish between positive and negative classes. ROC is a curve that plots the true positive rate (TPR) against the false positive rate (FPR) at various threshold settings. The area under this curve, ROC AUC, measures the overall performance of the model. An AUC of 1.0 indicates a perfect model, while an AUC of 0.5 indicates a random model that is no better than guessing. The roc_auc of our best model, which was the LDA model was about .98. This means that our model is very close to perfect and can predict whether or not a loan will default in an accurate manner. 
+
+## Recommendations 
+Based on the EDA and ML analysis, the business can take several steps to reduce the risk of loan defaults and improve their loan approval process. Some recommendations would be to consider income and debt-to-income ratio as key factors in the loan approval process because the analysis showed that customers who defaulted on loans had lower income and higher debt-to-income ratios than those who did not. Therefore, it is essential to factor in income and debt-to-income ratio when assessing the risk of loan defaults and determining loan amounts. Review loan purposes carefully, the EDA analysis indicated that customers who took out loans for credit card debt were more likely to default on their loans. Therefore, the business should be cautious when approving loans for this purpose and consider offering alternative solutions such as debt consolidation or financial counseling. The logistic model showed that the loan term (specifically, five-year loans) was a strong predictor of loan defaults. Therefore, the business should consider reviewing its loan terms and adjusting them to minimize the risk of defaults.Provide financial education and resources because EDA showed that customers who rented their homes were more likely to default on their loans. This may indicate that these customers may benefit from financial education and resources to help them manage their finances better. The business could consider offering financial literacy courses or partnering with financial advisers to provide guidance to its customers. These recommendations will be helpful to the business because they will help reduce loan default rates which in turn will save the business money. 
+
+## Conclusion 
+  In conclusion, the purpose of this analysis and model building was to help the business discover what factors play a role in loans defaulting as well as how the business can predict and reduce the rate of loan defaults it experiences. To obtain this information exploratory data analysis and ML models were coded to help come up with a possible solution. 
+
+  Based on the EDA, it was seen through either tables or graphs that there was some pattern of loan default rates when it came to certain variables. These differences were noticeable in the debt:income, interest rate, homeownership and loan purpose variables. The graphs as well as tables of these variables showed a possible trend of loan defaults based on the values of those variables. 
+  
+  After EDA, three different ML models were built. The three models consisted of logistical, knn and LDA models. The best performing of these three models was the LDA with an accuracy of 98%. However, using the vip() function on the logistical model we were able to see variables of importance. The top four variables were what term the loan was (five year loans were more prone to defaults), the installment, loan amount, and the interest rate. Based on the ML models we can see that our EDA was correct when it came the fact the interest rate is a key player in whether or not a customer will default on their loan. The recommendations for the business are to consider debt:income ratios, review loan purposes, review loan terms, and provide customers with educational resources so that they are better prepared to pay off their loans. 
+
+# Appendix/Appendices
+
+# Data Analysis [30 Points]
+
+In this section, you must think of at least 6 relevant questions that explore the relationship between `loan_default` and the other variables in the `loan_df` data set. The goal of your analysis should be discovering which variables drive the differences between customers who do and do not default on their loans.
+
+You must answer each question and provide supporting data summaries with either a summary data frame (using `dplyr`/`tidyr`) or a plot (using `ggplot`) or both.
+
+In total, you must have a minimum of 3 plots (created with `ggplot`) and 3 summary data frames (created with `dplyr`) for the exploratory data analysis section. Among the plots you produce, you must have at least 3 different types (ex. box plot, bar chart, histogram, scatter plot, etc...)
+
+See the example question below.
+
+
+**Note**: To add an R code chunk to any section of your project, you can use the keyboard shortcut `Ctrl` + `Alt` + `i` or the `insert` button at the top of your R project template notebook file.
+
+
+## Question 1
+
+
+**Question**: How do the summary statistics of the loan default groups differ in certain variables? 
+
+
+**Answer**: There is clearly a difference in some key variables within this data set between those who did and did not default on a loan. Those who defaulted on a loan had an average and median income lower than those who didn't by $8,277.66 (differences in average) and \$9000 (differences in median).
+Furthermore, interestingly those who defaulted on a loan had a higher average_loan amount by about $1,202.32. Other statistical comparisons between the two groups such as average_credit_lines and average_credit_history are shown in the table and show that those who did not default on a loan have a greater number in both these categories. 
+
+
+```{r}
+loans_df %>% 
+  group_by(loan_default) %>% 
+  summarize( 
+    average_income = mean(annual_income), #this code chunk finds the average (mean) of the columns
+    median_income = median(annual_income), 
+    average_credit_lines = mean(total_credit_lines),
+    average_credit_history = mean(years_credit_history),
+    median_credit_history = median(years_credit_history), 
+    average_loan = mean(loan_amount)
+    )
+
+
+```
+
+
+
+## Question 2
+
+
+**Question**: How do the varying homeownership statuses affect the loan default?
+
+
+**Answer**: The resulting table shows us that the highest proportion of people who had a loan default rent their home. These people make up about 43% of the loan defaults in this data set. Those who own homes would have the second highest proportion at about 38% and then those who have a mortgage at about 32.4%. 
+
+
+```{r}
+loans_df %>%
+group_by(homeownership) %>% #group by the home ownership value 
+summarise(n_customers = n(), #counts number of customers 
+customers_default = sum(loan_default == 'yes'), # sums the numbers of customers who did have a loan default 
+default_percent = 100 * mean(loan_default == 'yes')) # gives proportion 
+
+
+```
+
+
+## Question 3
+
+
+**Question**: What are the statistics for the debt:income ratio for the two groups? 
+
+
+**Answer**: The resulting table shows us that both the average and median of debt to income ratio are higher for the group of people that had their loan defaulted. 
+
+```{r}
+loans_df %>% 
+  group_by(loan_default) %>% 
+  summarize( 
+    average_debttoincome = mean(debt_to_income), #finds average of the debt:income 
+    median_debttoincome = median(debt_to_income) #finds median of debt:income 
+    )
+
+
+```
+
+
+
+
+
+
+## Question 4
+
+
+**Question**: Is there any possible relationship present between income and loan amount? 
+
+
+**Answer**: The resulting scatter plot shows a numerous amounts of points scattered all over the graph. This pattern, or lack thereof, suggests that income is not a great predictor of a clients loan amount. 
+
+```{r}
+ggplot(loans_df, aes(x = annual_income , y = loan_amount) ) + #use ggplot to make graph
+   geom_point(color = '#006633', alpha = .25) + #call geom_point since we want a scatter plot 
+  labs(title = "Income and Loan Amount") + #name the graph
+  facet_wrap(~loan_default)
+```
+
+## Question 5
+
+
+**Question**: Is there a loan_purpose that is more subject to a loan_default?
+
+
+**Answer**: Based on the histogram below, we can see that the largest section of the 'yes' bar is filled with the color pertaining to credit card loans. This means that the largest proportion of the loans defaulted were credit card loans. 
+
+
+```{r}
+ggplot(loans_df, mapping = aes(x = loan_default, fill = loan_purpose)) + #fill by histogram to see if proportions of satisfaction varied within each department 
+  geom_bar(color = 'white') + #use geom_bar to make bar_graph and the edges are white
+   labs(title = 'Is there a loan_purpose that is more subject to a loan_default?', 
+       x = 'Loan Default?', 
+       y = 'Count') +
+coord_flip() #flip the orientation of the graph 
+
+
+```
+
+## Question 6
+
+
+**Question**: Is there a difference in interest rate  between those who did and did not have a loan default? 
+
+
+**Answer**: The resulting boxplot shows us that the interest rates between the two groups differ greatly. The boxplot tells us that the interest rates for those who defaulted on loans is higher than those who did not which could mean this is an important variable to keep track of. 
+
+```{r}
+ggplot(data = loans_df,
+mapping = aes(x = interest_rate)) + #x value is years of credit history 
+geom_boxplot(fill = "#006EA1") + #colors box plot 
+  facet_wrap(~loan_default) + #facet by loan_default value 
+  labs(title = "Boxplot of interest rate for each default group")
+ 
+
+
+```
+
+
+# Predictive Modeling [70 Points]
+
+
+In this section of the project, you will fit **three classification algorithms** to predict the response variable,`loan_default`. You should use all of the other variables in the `loans_df` data as predictor variables for each model.
+
+You must follow the machine learning steps below. 
+
+The data splitting and feature engineering steps should only be done once so that your models are using the same data and feature engineering steps for training.
+
+- Split the `loans_df` data into a training and test set (remember to set your seed)
+- Specify a feature engineering pipeline with the `recipes` package
+    - You can include steps such as skewness transformation, dummy variable encoding or any other steps you find appropriate
+- Specify a `parsnip` model object
+    - You may choose from the following classification algorithms:
+      - Logistic Regression
+      - LDA
+      - QDA
+      - KNN
+      - Decision Tree
+      - Random Forest
+- Package your recipe and model into a workflow
+- Fit your workflow to the training data
+    - If your model has hyperparameters:
+      - Split the training data into 5 folds for 5-fold cross validation using `vfold_cv` (remember to set your seed)
+      - Perform hyperparamter tuning with a random grid search using the `grid_random()` function 
+      - Hyperparameter tuning can take a significant amount of computing time. Be careful not to set the `size` argument of `grid_random()` too large. I recommend `size` = 10 or smaller.
+      - Select the best model with `select_best()` and finalize your workflow
+- Evaluate model performance on the test set by plotting an ROC curve using `autoplot()` and calculating the area under the ROC curve on your test data
+
+## Data Splitting 
+
+```{r} 
+set.seed(063)
+
+loans_split <- initial_split(loans_df, prop = 0.75,
+                              strata = loan_default ) #splits the date 
+
+loans_training <- loans_split %>% training() #creates training data 
+
+loans_test <- loans_split %>% testing() #created testing data 
+
+
+# Create cross validation folds for hyperparameter tuning
+set.seed(063)
+
+loans_folds <- vfold_cv(loans_training, v = 5)
+
+```
+
+## Feature Engineering 
+
+```{r}
+loans_recipe <- recipe(loan_default ~ ., data = loans_training) %>% 
+                 step_YeoJohnson(all_numeric(), -all_outcomes()) %>%
+                 step_normalize(all_numeric(), -all_outcomes()) %>% #normalizes data 
+                 step_dummy(all_nominal(), -all_outcomes()) #creates a specification of a recipe step that will convert nominal data (e.g. character or factors) into one or more numeric binary model terms for the levels of the original data.
+```
+
+## Check Transformations 
+
+```{r}
+loans_recipe %>% 
+ prep() %>% 
+  bake(new_data = loans_training) #baking our recipe 
+```
+
+
+## Model 1 - Logistic Model 
+
+### Model 1 Specification 
+
+```{r}
+logistic_model <- logistic_reg() %>% #this code specifies our model 
+                  set_engine('glm') %>% #engine is glm
+                  set_mode('classification') #mode is classification 
+logistic_model
+
+```
+
+### Model 1 Workflow 
+
+```{r}
+logistic_wf <- workflow() %>% #we are creating the workflow for this model 
+               add_model(logistic_model) %>% #adds model 
+               add_recipe(loans_recipe) #adds recipe 
+```
+
+### Model 1 Fitting the Model 
+
+```{r}
+logistic_fit <-  logistic_wf %>% 
+                last_fit(split = loans_split) #Fits workflow to the training data
+```
+### Model 1 - Performance Metrics 
+
+```{r}
+# We can view our performance metrics on the test data
+# Accuracy and Area under the ROC curve 
+logistic_fit %>% collect_metrics()
+
+```
+### Model 1 Predictions 
+
+```{r}
+logistic_test_predictions <-  logistic_fit %>% 
+                     collect_predictions() #shows us our predictions 
+logistic_test_predictions
+```
+
+### Model 1 ROC Curve 
+
+```{r}
+## ROC Curve
+roc_curve(logistic_test_predictions, truth = loan_default , estimate = .pred_yes ) %>% 
+ autoplot() 
+
+# ROC AUC
+roc_auc(logistic_test_predictions, truth = loan_default, estimate = .pred_yes)
+
+```
+### Model 1 VIP 
+
+```{r}
+glm_trained_model <- logistic_fit %>%
+  extract_fit_parsnip()
+
+glm_trained_model
+
+vip(glm_trained_model)
+
+```
+
+## Model 2 - KNN Model 
+
+### Model 2 - Specification
+
+```{r}
+knn_model <- nearest_neighbor(neighbors = tune()) %>% #in this code we are specifying the KNN model 
+             set_engine('kknn') %>% 
+             set_mode('classification')
+knn_model
+```
+
+### Model 2 - KNN Workflow
+
+```{r}
+knn_wf <- workflow() %>% #creating the workflow 
+          add_model(knn_model) %>% 
+          add_recipe(loans_recipe)
+```
+
+### Model 2 - Creating a tuning grid 
+
+```{r}
+k_grid <- tibble(neighbors = c( 10, 15, 25, 45, 60, 80, 100, 120, 140, 180)) #these are the k values we want to test with
+
+```
+
+### Model 2 - Grid Search 
+use `tune_grid()` to perform hyperparameter tuning using `k_grid` and `mobile_folds`.
+```{r}
+set.seed(231)
+
+knn_tuning <- knn_wf %>% #tuning the knn 
+             tune_grid(resamples = loans_folds,
+                        grid = k_grid)
+```
+
+### Model 2 - Selecting the best model 
+
+```{r}
+best_k <- knn_tuning %>% 
+          select_best(metric = 'roc_auc') #selecting the best model 
+```
+
+### Model 2 - Finalizing the workflow 
+
+```{r}
+final_knn_wf <- knn_wf %>% 
+                finalize_workflow(best_k) #finalizing the workflow 
+```
+
+### Model 2 - Fit Model 
+
+```{r}
+knn_fit <- final_knn_wf %>% 
+           last_fit(split = loans_split) #fitting the model 
+```
+
+### Model 2 - Performance Metrics 
+
+```{r}
+# We can view our performance metrics on the test data
+# Accuracy and Area under the ROC curve 
+knn_fit %>% collect_metrics()
+
+```
+
+### Model 2 - Collect Predictions 
+
+```{r}
+knn_results <-   knn_fit %>% 
+                collect_predictions() #collecting predictions 
+```
+
+### Model 2 - ROC Curve 
+
+```{r}
+
+## ROC Curve
+roc_curve( knn_results , truth = loan_default , estimate = .pred_yes ) %>% 
+autoplot()
+
+# ROC AUC
+roc_auc(knn_results, truth = loan_default, estimate = .pred_yes)
+
+```
+
+
+## Model 3 - LDA 
+
+### Model 3 - Specifying the model 
+
+```{r}
+lda_model <- discrim_regularized(frac_common_cov = 1) %>% #specifies the LDA model 
+             set_engine('klaR') %>% 
+             set_mode('classification')
+
+```
+
+### Model 3 - LDA Workflow 
+
+```{r}
+lda_wf <- workflow() %>% #workflow for our model 
+          add_model(lda_model) %>% 
+          add_recipe(loans_recipe)
+```
+
+### Model 3 - Fit Model 
+
+```{r}
+lda_fit <-  lda_wf %>% #fitting the model 
+                 last_fit(split = loans_split)
+
+```
+
+### Model 3 - Performance Metrics 
+
+```{r}
+# We can view our performance metrics on the test data
+# Accuracy and Area under the ROC curve 
+lda_fit %>% collect_metrics()
+
+```
+
+### Model 3 - Collect Predictions 
+
+```{r}
+lda_results <-   lda_fit %>%
+                 collect_predictions()  #collecting predictions 
+lda_results
+
+```
+### Model 3 - ROC Curve 
+
+```{r}
+#ROC Curve 
+roc_curve(lda_results , truth = loan_default , estimate = .pred_yes ) %>% 
+  autoplot()
+
+# ROC AUC
+roc_auc(lda_results, truth = loan_default, estimate = .pred_yes)
+```
+
+
+--- End of the Project ---
