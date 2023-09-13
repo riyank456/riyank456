@@ -12,10 +12,13 @@ string yen = "Yen";
 string yuan = "Yuan"; 
 string cd = "Canadian Dollar"; 
 string pound = "Pound"; 
-double usd = 0;  
+double usd;   
 cout<< "Welcome to the simple currency converter app \n Where you can convert USD to a currency of your choice \n"; 
-cout <<"Enter your USD amount below or enter 00 to exit!"<<endl; 
+while(usd != -1){
+cout <<"Enter your USD amount below or enter -1 to exit!"<<endl; 
 cin >> usd; 
+if(usd == -1){
+     break; }
 cout <<"Great! Now what would you like to convert to? The options are listed below: \n-Yen\n-Pound\n-Canadian Dollar\n-Yuan\n"; 
 string convertTo; 
 cin >> convertTo; 
@@ -37,7 +40,8 @@ else if(convertTo == pound){
 }
 
 else{
-    cout<<"Please enter one of the currencies listed above, make sure you spellcheck"; 
+    cout<<"Please enter one of the currencies listed above, make sure you spellcheck\n"; 
 }
-
+}
+cout <<"Thank you come again!"; 
 } 
